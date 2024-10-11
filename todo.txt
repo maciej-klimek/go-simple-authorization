@@ -1,0 +1,3 @@
+- dodawanie tokenów do bazy (jsona)
+- autoryzacja sesji przez csrf
+- refactor calosci, lepszy podzial funkcjonalnosci
