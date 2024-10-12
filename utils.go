@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
-	"log"
 
 	"golang.org/x/crypto/bcrypt"
 )

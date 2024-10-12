@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 )
 
@@ -18,7 +17,7 @@ var Filename string = "userData.json"
 func loadUserData() error {
 	_, err := os.Stat(Filename)
 	if os.IsNotExist(err) {
-		fmt.Println("> File", Filename, " does not exist, creating a new one.")
+		log.Warn("File does not exist, creating a new one.")
 		return nil
 	}
 
@@ -32,7 +31,7 @@ func loadUserData() error {
 		return err
 	}
 
-	fmt.Println("> User data loaded from", Filename)
+	log.Info("User data loaded from", Filename)
 	return nil
 }
 
@@ -50,6 +49,6 @@ func saveUserData() error {
 		return err
 	}
 
-	fmt.Println("> User data saved to", Filename)
+	log.Info("User data saved to", Filename)
 	return nil
 }

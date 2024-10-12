@@ -3,27 +3,45 @@ package main
 import (
 	"errors"
 	"net/http"
+
+	"github.com/sirupsen/logrus"
 )
 
-var AuthError = errors.New("Unauthorized")
+var ErrAuth = errors.New("Unauthorized")
 
 func Authorize(req *http.Request) error {
 	username := req.FormValue("username")
 	user, ok := Users[username]
 	if !ok {
-		return AuthError
+		log.Error("User not found")
+		return ErrAuth
 	}
 
-	// Get session token from cookies
 	sessionToken, err := req.Cookie("session_token")
-	if err != nil || sessionToken.Value == "" || sessionToken.Value == user.SessionToken {
-		return AuthError
+	if err != nil {
+		log.WithFields(logrus.Fields{"error": err}).Info("Failed to get session token")
+		return ErrAuth
 	}
 
-	// Get csrf token from the header !! (thats the real auth here)
-	csrfToken := req.Header.Get("X-CSRFToken")
+	log.WithFields(logrus.Fields{
+		"request_token": sessionToken.Value,
+		"db_token":      user.SessionToken,
+	}).Debug("Session token check")
+
+	if sessionToken.Value == "" || sessionToken.Value != user.SessionToken {
+		log.Warn("Session token mismatch or empty")
+		return ErrAuth
+	}
+
+	csrfToken := req.Header.Get("X-CSRF-Token")
+	log.WithFields(logrus.Fields{
+		"request_token": csrfToken,
+		"db_token":      user.CSRFToken,
+	}).Debug("CSRF token check")
+
 	if csrfToken != user.CSRFToken {
-		return AuthError
+		log.Warn("CSRF token mismatch")
+		return ErrAuth
 	}
 
 	return nil

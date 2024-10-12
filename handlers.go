@@ -1,16 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 )
 
 func register(wrt http.ResponseWriter, req *http.Request) {
-	fmt.Println("> Register Handler called")
+	log.Info("> Register Handler called")
 	if req.Method != http.MethodPost {
-		err := http.StatusMethodNotAllowed
-		http.Error(wrt, "Invalid methon", err)
+		http.Error(wrt, "Invalid method", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -18,8 +16,7 @@ func register(wrt http.ResponseWriter, req *http.Request) {
 	password := req.FormValue("password")
 
 	if _, ok := Users[username]; ok {
-		err := http.StatusConflict
-		http.Error(wrt, "User already exists", err)
+		http.Error(wrt, "User already exists", http.StatusConflict)
 		return
 	}
 
@@ -29,14 +26,13 @@ func register(wrt http.ResponseWriter, req *http.Request) {
 	}
 	saveUserData()
 
-	fmt.Fprintln(wrt, "User registered successfully")
+	wrt.Write([]byte("User registered successfully"))
 }
 
 func login(wrt http.ResponseWriter, req *http.Request) {
-	fmt.Println("> Login Handler called")
+	log.Info("Login Handler called")
 	if req.Method != http.MethodPost {
-		err := http.StatusMethodNotAllowed
-		http.Error(wrt, "Invalid methon", err)
+		http.Error(wrt, "Invalid method", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -46,12 +42,10 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 	user, ok := Users[username]
 
 	if !ok || !checkPasswordHash(password, user.PasswordHash) {
-		err := http.StatusUnauthorized
-		http.Error(wrt, "Invalid username or password", err)
+		http.Error(wrt, "Invalid username or password", http.StatusUnauthorized)
 		return
 	}
 
-	// setting sessionToken
 	sessionToken := generateToken(32)
 
 	http.SetCookie(wrt, &http.Cookie{
@@ -62,7 +56,6 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 	})
 	user.SessionToken = sessionToken
 
-	// setting csrfToken
 	csrfToken := generateToken(32)
 
 	http.SetCookie(wrt, &http.Cookie{
@@ -75,35 +68,31 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 
 	Users[username] = user
 
-	fmt.Fprintln(wrt, "Login successful!")
+	wrt.Write([]byte("Login successful!"))
 }
 
 func content(wrt http.ResponseWriter, req *http.Request) {
-	fmt.Println("> Chat Handler called")
+	log.Info("> Chat Handler called")
 	if req.Method != http.MethodPost {
-		err := http.StatusMethodNotAllowed
-		http.Error(wrt, "Invalid request method.", err)
+		http.Error(wrt, "Invalid request method.", http.StatusMethodNotAllowed)
 		return
 	}
 
 	if err := Authorize(req); err != nil {
-		err := http.StatusUnauthorized
-		http.Error(wrt, "Unauthorized", err)
+		http.Error(wrt, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
 	username := req.FormValue("username")
-	fmt.Fprintf(wrt, "CSRF Token validation successful. Welcome, %s", username)
+	wrt.Write([]byte("CSRF Token validation successful. Welcome, " + username))
 }
 
 func logout(wrt http.ResponseWriter, req *http.Request) {
 	if err := Authorize(req); err != nil {
-		err := http.StatusUnauthorized
-		http.Error(wrt, "Unauthorized", err)
+		http.Error(wrt, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
-	// Clear cookie
 	http.SetCookie(wrt, &http.Cookie{
 		Name:     "session_token",
 		Value:    "",
@@ -124,5 +113,5 @@ func logout(wrt http.ResponseWriter, req *http.Request) {
 	user.CSRFToken = ""
 	Users[username] = user
 
-	fmt.Fprintln(wrt, "Logged out successfuly")
+	wrt.Write([]byte("Logged out successfully"))
 }
