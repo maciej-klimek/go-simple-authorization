@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"net/mail"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -29,4 +30,9 @@ func generateToken(length int) string {
 	}
 	return base64.URLEncoding.EncodeToString(bytes)
 
+}
+
+func checkValidEmail(email string) bool {
+	_, err := mail.ParseAddress(email)
+	return err == nil
 }

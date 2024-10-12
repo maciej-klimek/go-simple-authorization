@@ -1,6 +1,7 @@
 {
-  "martin": {
-    "PasswordHash": "$2a$10$CYXw5F1SGC4.5xJOtdnAfOKk4Byohz.RTD4F5oAUtlpPxFuNm1I6C",
+  "martin@romper.pl": {
+    "Username": "martin",
+    "PasswordHash": "$2a$10$s2XTeGvai8DCD3.l2aiu6.rLOfqcUpWquSFvMAEpmD5kQw2dRoTw.",
     "SessionToken": "",
     "CSRFToken": ""
   }

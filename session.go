@@ -10,8 +10,10 @@ import (
 var ErrAuth = errors.New("Unauthorized")
 
 func Authorize(req *http.Request) error {
-	username := req.FormValue("username")
-	user, ok := Users[username]
+	email := req.FormValue("email")
+
+	user, ok := Users[email]
+
 	if !ok {
 		log.Error("User not found")
 		return ErrAuth

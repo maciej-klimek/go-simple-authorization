@@ -12,16 +12,24 @@ func register(wrt http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	email := req.FormValue("email")
+
+	if !checkValidEmail(email) {
+		http.Error(wrt, "Invalid email", http.StatusNotAcceptable)
+		return
+	}
+
 	username := req.FormValue("username")
 	password := req.FormValue("password")
 
-	if _, ok := Users[username]; ok {
+	if _, ok := Users[email]; ok {
 		http.Error(wrt, "User already exists", http.StatusConflict)
 		return
 	}
 
 	hashedPassword, _ := hashPassword(password)
-	Users[username] = LoginData{
+	Users[email] = LoginData{
+		Username:     username,
 		PasswordHash: hashedPassword,
 	}
 	saveUserData()
@@ -36,10 +44,15 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	username := req.FormValue("username")
-	password := req.FormValue("password")
+	email := req.FormValue("email")
+	if !checkValidEmail(email) {
+		http.Error(wrt, "Invalid email", http.StatusNotAcceptable)
+		return
+	}
 
-	user, ok := Users[username]
+	password := req.FormValue("password")
+	user, ok := Users[email]
+	log.Debug(user)
 
 	if !ok || !checkPasswordHash(password, user.PasswordHash) {
 		http.Error(wrt, "Invalid username or password", http.StatusUnauthorized)
@@ -66,7 +79,7 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 	})
 	user.CSRFToken = csrfToken
 
-	Users[username] = user
+	Users[email] = user
 
 	wrt.Write([]byte("Login successful!"))
 }
