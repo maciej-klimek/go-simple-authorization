@@ -10,9 +10,9 @@ import (
 var ErrAuth = errors.New("Unauthorized")
 
 func Authorize(req *http.Request) error {
-	email := req.FormValue("email")
+	email, err := req.Cookie("email")
 
-	user, ok := Users[email]
+	user, ok := Users[email.Value]
 
 	if !ok {
 		log.Error("User not found")
@@ -35,13 +35,13 @@ func Authorize(req *http.Request) error {
 		return ErrAuth
 	}
 
-	csrfToken := req.Header.Get("X-CSRF-Token")
+	csrfToken, err := req.Cookie("csrf_token")
 	log.WithFields(logrus.Fields{
 		"request_token": csrfToken,
 		"db_token":      user.CSRFToken,
 	}).Debug("CSRF token check")
 
-	if csrfToken != user.CSRFToken {
+	if csrfToken.Value != user.CSRFToken {
 		log.Warn("CSRF token mismatch")
 		return ErrAuth
 	}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login</h2>
+      <form action="/login" method="POST" id="loginForm">
+        <label for="email">Email:</label>
+        <input type="text" name="email" required /><br /><br />
+        <label for="password">Password:</label>
+        <input type="password" name="password" required /><br /><br />
+        <button type="submit">Login</button>
+      </form>
+      <p id="errorMessage"></p>
+      <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+    <script>
+      document.getElementById("loginForm").onsubmit = function (event) {
+        event.preventDefault();
+        fetch("/login", {
+          method: "POST",
+          body: new FormData(event.target),
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.location.href = "/content";
+            } else {
+              return response.text();
+            }
+          })
+          .then((text) => {
+            if (text) {
+              document.getElementById("errorMessage").innerText = text;
+            }
+          });
+      };
+    </script>
+  </body>
+</html>

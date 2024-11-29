@@ -6,7 +6,6 @@ import (
 )
 
 type LoginData struct {
-	Username     string
 	PasswordHash string
 	SessionToken string
 	CSRFToken    string

@@ -1,8 +1,7 @@
 {
-  "martin@romper.pl": {
-    "Username": "martin",
-    "PasswordHash": "$2a$10$s2XTeGvai8DCD3.l2aiu6.rLOfqcUpWquSFvMAEpmD5kQw2dRoTw.",
-    "SessionToken": "",
-    "CSRFToken": ""
+  "123@123": {
+    "PasswordHash": "$2a$10$eqq4DgnKKSvU8q9nv1QfsubqIFzCnNTyHg3BJb4oNg1iv8f3aGNYG",
+    "SessionToken": "vt2VQGyGfj_w1ZkGdZXNm0Ik605GDnOQPFO9WaBsDe8=",
+    "CSRFToken": "9fukz_BXfT4Bp6haWpTbwdFj2OC9DKdBj6u6TgaADiU="
   }
 }
