@@ -17,7 +17,7 @@ var Filename string = "userData.json"
 func loadUserData() error {
 	_, err := os.Stat(Filename)
 	if os.IsNotExist(err) {
-		log.Warn("File does not exist, creating a new one.")
+		Log.Warn("File does not exist, creating a new one.")
 		return nil
 	}
 
@@ -31,7 +31,7 @@ func loadUserData() error {
 		return err
 	}
 
-	log.Info("User data loaded from", Filename)
+	Log.Info("User data loaded from", Filename)
 	return nil
 }
 
@@ -49,6 +49,6 @@ func saveUserData() error {
 		return err
 	}
 
-	log.Info("User data saved to", Filename)
+	Log.Info("User data saved to", Filename)
 	return nil
 }

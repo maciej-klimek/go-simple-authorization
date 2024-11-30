@@ -26,7 +26,7 @@ func checkPasswordHash(password string, hash string) bool {
 func generateToken(length int) string {
 	bytes := make([]byte, length)
 	if _, err := rand.Read(bytes); err != nil {
-		log.Fatalf("Failed to generate session token: %v", err)
+		Log.Fatalf("Failed to generate session token: %v", err)
 	}
 	return base64.URLEncoding.EncodeToString(bytes)
 

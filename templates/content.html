@@ -1,14 +1,18 @@
-<!-- content.html -->
 <!DOCTYPE html>
 <html>
   <head>
     <title>Content Page</title>
   </head>
-  <body>
-    <h1>Welcome to the Content Page</h1>
-    <form action="/content" method="POST">
+  <body class="bg-gray-100 p-8">
+    <h1 class="text-3xl font-bold">Welcome to the Content Page</h1>
+    <form action="/content" method="POST" class="mt-6">
       <input type="hidden" name="username" value="{{.Username}}" />
-      <button type="submit">Submit</button>
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
     </form>
+
+    <!-- Logout Button -->
+    <button id="logoutButton" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">Logout</button>
+
+    <script src="/static/scripts/content.js"></script>
   </body>
 </html>

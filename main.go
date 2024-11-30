@@ -5,11 +5,10 @@ import (
 )
 
 func main() {
-
-	ConfigureLogger("info")
-	log.Info("================== Server is up ==================")
+	Log.Info("================== Server is up ==================")
 
 	loadUserData()
+	ExampleLog()
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/register", register)
@@ -18,9 +17,4 @@ func main() {
 	http.HandleFunc("/content", content)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static")))) // Serve static files (CSS, JS)
 	http.ListenAndServe(":8080", nil)
-
-}
-
-func index(wrt http.ResponseWriter, req *http.Request) {
-	http.Redirect(wrt, req, "/login", http.StatusFound)
 }

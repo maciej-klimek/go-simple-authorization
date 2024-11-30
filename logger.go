@@ -2,42 +2,36 @@ package main
 
 import (
 	"os"
-	"path/filepath"
-	"runtime"
-	"strconv"
-	"strings"
 
 	"github.com/sirupsen/logrus"
 )
 
-var log = logrus.New()
+var Log *logrus.Logger
 
-func ConfigureLogger(level string) {
-	log.SetReportCaller(true)
-	log.SetFormatter(&logrus.TextFormatter{
-		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
-			filename := filepath.Base(frame.File)
-			padding := 20
-			fileLine := filename + ":" + strconv.Itoa(frame.Line)
+func init() {
+	Log = logrus.New()
 
-			if len(fileLine) < padding {
-				fileLine = fileLine + strings.Repeat(" ", padding-len(fileLine))
-			}
+	Log.Out = os.Stdout
 
-			return ">", " < " + fileLine
-		},
+	Log.Level = logrus.DebugLevel
+	Log.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp: false,
+		ForceColors:   true,
+		DisableColors: false,
 	})
-	switch level {
-	case "debug":
-		log.SetLevel(logrus.DebugLevel)
-	case "info":
-		log.SetLevel(logrus.InfoLevel)
-	case "warn":
-		log.SetLevel(logrus.WarnLevel)
-	case "error":
-		log.SetLevel(logrus.ErrorLevel)
-	default:
-		log.SetLevel(logrus.InfoLevel)
-	}
-	log.SetOutput(os.Stdout)
+
+	// JSON formatted logs instead
+	// log.SetFormatter(&logrus.JSONFormatter{
+	// 	PrettyPrint: true,
+	// })
+}
+
+func ExampleLog() {
+	Log.WithFields(logrus.Fields{
+		"user_id":   1234,
+		"operation": "fetch data",
+	}).Info("Operation successful")
+	Log.Debug("This is a debug message")
+	Log.Warn("This is a warning message")
+	Log.Error("This is an error message")
 }
