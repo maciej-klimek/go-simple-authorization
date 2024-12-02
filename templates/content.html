@@ -1,4 +1,3 @@
-<!-- content.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +16,15 @@
 
       <!-- Logout Button -->
       <button id="logoutButton" class="btn">Logout</button>
+
+      <!-- Button to trigger the alert -->
+      <button id="alertButton" class="btn">Click me for alert</button>
+
+      <!-- File upload form -->
+      <form id="fileUploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" required />
+        <button type="submit" class="btn">Upload File</button>
+      </form>
     </div>
 
     <script src="/static/scripts/content.js"></script>

@@ -1,8 +1,23 @@
 {
-  "123@123": {
-    "PasswordHash": "$2a$10$CBKq/Gu/2GF7hl8KIK0doeI.lCkbI3gLY.wBu7wd7orptgF6oDjKe",
+  "1234@1234": {
+    "PasswordHash": "$2a$10$AjHi3B1nE1lSGv0o9pEyheufG6HwkQUvyjMJXDEhXy2YIrN8fsJN.",
     "SessionToken": "",
     "CSRFToken": ""
+  },
+  "123@123": {
+    "PasswordHash": "$2a$10$CBKq/Gu/2GF7hl8KIK0doeI.lCkbI3gLY.wBu7wd7orptgF6oDjKe",
+    "SessionToken": "MTvY6s1RTD7eKC0uIMrtayxhe0dbUhKlGmPxQp45Wk0=",
+    "CSRFToken": "I6rX_8eR5bjBpXEwJ9YCAernPtTIwKWOZj_uuPl5NQc="
+  },
+  "123@1234": {
+    "PasswordHash": "$2a$10$DZXg9jlFyCIRdx857ROKwuKVtyQgSUQSgzfVVSDD4N0T.wqF3ZejW",
+    "SessionToken": "",
+    "CSRFToken": ""
+  },
+  "1@1": {
+    "PasswordHash": "$2a$10$IgIJeoS/bJsXVhpU/U6LDe1gm4.9a3h3jO/s3HigunSl5oXJC2AYq",
+    "SessionToken": "F6z1Gj9DAkcm_LZ_H8Xplmg_avKKMMlc_2WpZvFnuak=",
+    "CSRFToken": "0jTtdpaYhmE2Ir1NaEWj9Ty7fM6-h1r4f8OdIc_GjyM="
   },
   "witam@witam": {
     "PasswordHash": "$2a$10$Z4Pszo4ZE6pBziB9rS2cru0qZ3U9vUuxyWJ3dw3Wzz2UFtnGrFwiy",
