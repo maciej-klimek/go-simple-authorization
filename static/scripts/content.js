@@ -1,3 +1,5 @@
+alert("witam");
+
 document.getElementById("logoutButton").onclick = function () {
   fetch("/logout", {
     method: "POST",
@@ -17,6 +19,7 @@ document.getElementById("fileUploadForm").onsubmit = function (event) {
 
   // Get the CSRF token from the cookie
   const csrfToken = getCookie("csrf_token");
+  console.log("CSRF Token:", csrfToken);
 
   // Create a FormData object
   const formData = new FormData();
@@ -27,7 +30,7 @@ document.getElementById("fileUploadForm").onsubmit = function (event) {
   fetch("/content", {
     method: "POST",
     headers: {
-      "X-CSRF-Token": csrfToken, // Add CSRF token to headers
+      "X-CSRF-Token": csrfToken, // Pass the CSRF token from the cookie
     },
     body: formData,
   })

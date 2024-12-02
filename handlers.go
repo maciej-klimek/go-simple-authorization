@@ -168,32 +168,6 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 	}
 	Log.Debug("Session token validated successfully.")
 
-	// // CSRF Token validation
-
-	// for key, values := range req.Header {
-	// 	for _, value := range values {
-	// 		Log.Debugf("Header: %s: %s", key, value)
-	// 	}
-	// }
-
-	// csrfTokenHeader := req.Header.Get("X-CSRF-Token")
-	// csrfTokenCookie, err := req.Cookie("csrf_token")
-	// if err != nil {
-	// 	Log.Warn("Error retrieving CSRF token from cookies:", err)
-	// 	http.Error(wrt, "CSRF token missing", http.StatusUnauthorized)
-	// 	return
-	// }
-	// Log.Debugf("CSRF Token from header: %s", csrfTokenHeader)
-	// Log.Debugf("CSRF Token from cookie: %s", csrfTokenCookie.Value)
-
-	// // Check if CSRF tokens match
-	// if csrfTokenHeader != csrfTokenCookie.Value {
-	// 	Log.Warn("CSRF token mismatch: header:", csrfTokenHeader, "cookie:", csrfTokenCookie.Value)
-	// 	http.Error(wrt, "Invalid CSRF token", http.StatusUnauthorized)
-	// 	return
-	// }
-	// Log.Debug("CSRF token validated successfully.")
-
 	// Handle GET request (serve content page)
 	if req.Method == http.MethodGet {
 		Log.Debug("Serving content page")
@@ -207,12 +181,31 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Handle POST request for file upload
+	// Handle POST request for file upload (with CSRF validation)
 	if req.Method == http.MethodPost {
 		Log.Debug("Handling file upload request.")
 
+		// CSRF Token validation
+		csrfTokenHeader := req.Header.Get("X-CSRF-Token")
+		csrfTokenCookie, err := req.Cookie("csrf_token")
+		if err != nil {
+			Log.Warn("Error retrieving CSRF token from cookies:", err)
+			http.Error(wrt, "CSRF token missing", http.StatusUnauthorized)
+			return
+		}
+		Log.Debugf("CSRF Token from header: %s", csrfTokenHeader)
+		Log.Debugf("CSRF Token from cookie: %s", csrfTokenCookie.Value)
+
+		// Check if CSRF tokens match
+		if csrfTokenHeader != csrfTokenCookie.Value {
+			Log.Warn("CSRF token mismatch: header:", csrfTokenHeader, "cookie:", csrfTokenCookie.Value)
+			http.Error(wrt, "Invalid CSRF token", http.StatusUnauthorized)
+			return
+		}
+		Log.Debug("CSRF token validated successfully.")
+
 		// Parse the uploaded file
-		err := req.ParseMultipartForm(10 << 20) // Limit file size to 10MB
+		err = req.ParseMultipartForm(10 << 20) // Limit file size to 10MB
 		if err != nil {
 			Log.Error("Error parsing multipart form:", err)
 			http.Error(wrt, "Error processing file", http.StatusInternalServerError)

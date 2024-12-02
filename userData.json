@@ -6,8 +6,8 @@
   },
   "123@123": {
     "PasswordHash": "$2a$10$CBKq/Gu/2GF7hl8KIK0doeI.lCkbI3gLY.wBu7wd7orptgF6oDjKe",
-    "SessionToken": "MTvY6s1RTD7eKC0uIMrtayxhe0dbUhKlGmPxQp45Wk0=",
-    "CSRFToken": "I6rX_8eR5bjBpXEwJ9YCAernPtTIwKWOZj_uuPl5NQc="
+    "SessionToken": "ISmGIMxHY7gnKV87plV-Ko8eq_2Jj9EBSWt6nVTUE1Y=",
+    "CSRFToken": "a8PVWPmRzKgVO-2lhM5WvnYNRD94boc0O2Wrxz3P3Ic="
   },
   "123@1234": {
     "PasswordHash": "$2a$10$DZXg9jlFyCIRdx857ROKwuKVtyQgSUQSgzfVVSDD4N0T.wqF3ZejW",
