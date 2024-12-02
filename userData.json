@@ -1,8 +1,8 @@
 {
   "123@123": {
     "PasswordHash": "$2a$10$CBKq/Gu/2GF7hl8KIK0doeI.lCkbI3gLY.wBu7wd7orptgF6oDjKe",
-    "SessionToken": "G6tryFVY7EqspazRw8Ls8UxJqb1GNrZntGVv0knZrjE=",
-    "CSRFToken": "texMglpvECOwdkUVjv4tPUkMe0Wj-VFA6tsmwKKdI20="
+    "SessionToken": "",
+    "CSRFToken": ""
   },
   "witam@witam": {
     "PasswordHash": "$2a$10$Z4Pszo4ZE6pBziB9rS2cru0qZ3U9vUuxyWJ3dw3Wzz2UFtnGrFwiy",

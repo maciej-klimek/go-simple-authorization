@@ -1,17 +1,23 @@
+<!-- content.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Page</title>
+    <link rel="stylesheet" href="/static/styles/styles.css" />
   </head>
-  <body class="bg-gray-100 p-8">
-    <h1 class="text-3xl font-bold">Welcome to the Content Page</h1>
-    <form action="/content" method="POST" class="mt-6">
-      <input type="hidden" name="username" value="{{.Username}}" />
-      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
-    </form>
+  <body>
+    <div class="container">
+      <h1>Welcome to the Content Page</h1>
+      <form action="/content" method="POST">
+        <input type="hidden" name="username" value="{{.Username}}" />
+        <button type="submit" class="btn">Submit</button>
+      </form>
 
-    <!-- Logout Button -->
-    <button id="logoutButton" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">Logout</button>
+      <!-- Logout Button -->
+      <button id="logoutButton" class="btn">Logout</button>
+    </div>
 
     <script src="/static/scripts/content.js"></script>
   </body>
