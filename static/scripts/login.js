@@ -1,6 +1,3 @@
-// login.js (for login.html)
-
-alert("witam, login");
 document.getElementById("loginForm").onsubmit = function (event) {
   event.preventDefault();
   fetch("/login", {

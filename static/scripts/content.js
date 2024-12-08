@@ -1,60 +1,78 @@
-alert("witam");
+// content.js
 
-document.getElementById("logoutButton").onclick = function () {
-  fetch("/logout", {
-    method: "POST",
-  }).then((response) => {
-    if (response.ok) {
-      console.log("Logout successful");
-      window.location.href = "/login"; // Redirect to login page after logout
-    } else {
-      console.error("Error during logout");
-    }
-  });
-};
+// Function to extract CSRF token from cookies
+function getCsrfToken() {
+  const csrfToken =
+    document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("csrf_token="))
+      ?.split("=")[1] + "=";
 
-// File upload functionality with CSRF token
-document.getElementById("fileUploadForm").onsubmit = function (event) {
+  if (!csrfToken) {
+    console.error("CSRF token not found in cookies.");
+    throw new Error("CSRF token missing.");
+  }
+
+  return csrfToken;
+}
+
+function handleFileUpload(event) {
   event.preventDefault();
 
-  // Get the CSRF token from the cookie
-  const csrfToken = getCookie("csrf_token");
-  console.log("CSRF Token:", csrfToken);
+  const formData = new FormData(event.target);
+  const csrfToken = getCsrfToken(); // Get CSRF token
 
-  // Create a FormData object
-  const formData = new FormData();
-  const fileInput = document.getElementById("fileInput");
-  formData.append("file", fileInput.files[0]);
-
-  // Send the file and CSRF token in the request
+  // Prepare the request with CSRF token in the header
   fetch("/content", {
     method: "POST",
     headers: {
-      "X-CSRF-Token": csrfToken, // Pass the CSRF token from the cookie
+      "X-CSRF-Token": csrfToken, // Add CSRF token to the headers
     },
     body: formData,
   })
     .then((response) => {
       if (response.ok) {
-        console.log("File uploaded successfully");
-        window.location.href = "/content"; // Redirect or show success message
+        console.log("File upload successful");
+        return response.text();
       } else {
-        console.error("Error during file upload");
+        console.error("File upload failed");
+        return response.text();
+      }
+    })
+    .then((text) => {
+      console.log("Response: ", text);
+    })
+    .catch((error) => {
+      console.error("Error during file upload:", error);
+    });
+}
+
+// Attach the event listener to the file upload form submit
+document.getElementById("fileUploadForm").onsubmit = handleFileUpload;
+
+// Function for logging out
+function logout() {
+  const csrfToken = getCsrfToken(); // Get CSRF token for logout
+
+  // Call the /logout handler to handle the logout on the backend
+  fetch("/logout", {
+    method: "POST", // or GET based on your backend implementation
+    headers: {
+      "X-CSRF-Token": csrfToken, // Add CSRF token to the headers
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Logged out successfully");
+        window.location.href = "/login"; // Redirect to login after successful logout
+      } else {
+        console.error("Logout failed");
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error during logout:", error);
     });
-};
-
-// Utility function to get a cookie by name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-// Add event listener for the alert button
-document.getElementById("alertButton").onclick = function () {
-  alert("AAA");
-};
+// Attach the event listener to the logout button
+document.getElementById("logoutButton").onclick = logout;
