@@ -9,17 +9,13 @@
   <body>
     <div class="container">
       <h1>Welcome to the Content Page</h1>
-      <form action="/content" method="POST">
-        <input type="hidden" name="username" value="{{.Username}}" />
-        <button type="submit" class="btn">Submit</button>
-      </form>
-
-      <button id="logoutButton" class="btn">Logout</button>
 
       <form id="fileUploadForm" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="file" required />
         <button type="submit" class="btn">Upload File</button>
       </form>
+
+      <button id="logoutButton" class="btn">Logout</button>
     </div>
 
     <script src="/static/scripts/content.js"></script>

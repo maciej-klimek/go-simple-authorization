@@ -3,5 +3,10 @@
     "PasswordHash": "$2a$10$4umeMuZj6/h1xG2xCBU.AeS2KaW0y5UmrBzxeIIeafr4T.llqxY4a",
     "SessionToken": "",
     "CSRFToken": ""
+  },
+  "123@123": {
+    "PasswordHash": "$2a$10$MUIKGpQ/hR8dW5JRmnUp8emfVNd/30e5Je1WQhsVU6UdZ3dkkIGcu",
+    "SessionToken": "",
+    "CSRFToken": ""
   }
 }

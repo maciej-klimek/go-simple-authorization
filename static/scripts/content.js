@@ -9,7 +9,7 @@ function getCsrfToken() {
     console.error("CSRF token not found in cookies.");
     throw new Error("CSRF token missing.");
   }
-
+  console.log(csrfToken);
   return csrfToken;
 }
 
@@ -43,7 +43,7 @@ function handleFileUpload(event) {
     });
 }
 
-document.getElementById("fileUploadForm").onsubmit = handleFileUpload;
+document.getElementById("fileUploadForm").addEventListener("submit", handleFileUpload);
 
 function logout() {
   const csrfToken = getCsrfToken();
@@ -67,4 +67,4 @@ function logout() {
     });
 }
 
-document.getElementById("logoutButton").onclick = logout;
+document.getElementById("logoutButton").addEventListener("click", logout);
