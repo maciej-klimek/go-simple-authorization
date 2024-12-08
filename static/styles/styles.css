@@ -1,6 +1,3 @@
-/* styles.css */
-
-/* Global Styles */
 * {
   margin: 0;
   padding: 0;
@@ -48,7 +45,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Button Styles */
 .btn {
   background-color: #4caf50;
   color: white;
@@ -66,7 +62,6 @@ a:hover {
   background-color: #45a049;
 }
 
-/* Input Field Styles */
 .input-field {
   width: 100%;
   padding: 12px;
@@ -92,7 +87,6 @@ label {
   margin-top: 10px;
 }
 
-/* Responsive Styles */
 @media (max-width: 600px) {
   .container {
     width: 90%;

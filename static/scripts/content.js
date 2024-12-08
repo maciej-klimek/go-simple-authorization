@@ -1,6 +1,3 @@
-// content.js
-
-// Function to extract CSRF token from cookies
 function getCsrfToken() {
   const csrfToken =
     document.cookie
@@ -20,13 +17,12 @@ function handleFileUpload(event) {
   event.preventDefault();
 
   const formData = new FormData(event.target);
-  const csrfToken = getCsrfToken(); // Get CSRF token
+  const csrfToken = getCsrfToken();
 
-  // Prepare the request with CSRF token in the header
   fetch("/content", {
     method: "POST",
     headers: {
-      "X-CSRF-Token": csrfToken, // Add CSRF token to the headers
+      "X-CSRF-Token": csrfToken,
     },
     body: formData,
   })
@@ -47,24 +43,21 @@ function handleFileUpload(event) {
     });
 }
 
-// Attach the event listener to the file upload form submit
 document.getElementById("fileUploadForm").onsubmit = handleFileUpload;
 
-// Function for logging out
 function logout() {
-  const csrfToken = getCsrfToken(); // Get CSRF token for logout
+  const csrfToken = getCsrfToken();
 
-  // Call the /logout handler to handle the logout on the backend
   fetch("/logout", {
-    method: "POST", // or GET based on your backend implementation
+    method: "POST",
     headers: {
-      "X-CSRF-Token": csrfToken, // Add CSRF token to the headers
+      "X-CSRF-Token": csrfToken,
     },
   })
     .then((response) => {
       if (response.ok) {
         console.log("Logged out successfully");
-        window.location.href = "/login"; // Redirect to login after successful logout
+        window.location.href = "/login";
       } else {
         console.error("Logout failed");
       }
@@ -74,5 +67,4 @@ function logout() {
     });
 }
 
-// Attach the event listener to the logout button
 document.getElementById("logoutButton").onclick = logout;
