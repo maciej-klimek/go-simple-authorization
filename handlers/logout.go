@@ -41,11 +41,14 @@ func logout(wrt http.ResponseWriter, req *http.Request) {
 	email, err := req.Cookie("email")
 	if err == nil {
 		Log.Debugf("Logging out user: %s", email.Value)
-		user := Users[email.Value]
-		user.SessionToken = ""
-		user.CSRFToken = ""
-		Users[email.Value] = user
-		services.SaveUserData() // Save updated user data
+		user, err := services.LoadUserData(email.Value)
+		if err == nil {
+			user.SessionToken = ""
+			user.CSRFToken = ""
+			services.SaveUserData(email.Value, user)
+		} else {
+			Log.Warn("Failed to load user data during logout:", err)
+		}
 	} else {
 		Log.Warn("No email cookie found during logout")
 	}
