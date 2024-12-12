@@ -1,4 +1,3 @@
-// handlers/login.go
 package handlers
 
 import (

@@ -1,15 +1,6 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    volumes:
-      - shared-data:/shared-data
-    depends_on:
-      - db
-
   db:
     image: mysql:latest
     environment:
@@ -21,6 +12,21 @@ services:
       - "3307:3306"
     volumes:
       - shared-data:/shared-data
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - shared-data:/shared-data
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   shared-data:

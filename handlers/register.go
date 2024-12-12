@@ -1,4 +1,3 @@
-// handlers/register.go
 package handlers
 
 import (
