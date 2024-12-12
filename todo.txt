@@ -1,5 +1,8 @@
-- csrf w session.go musi byc brany z headera nie z cookies
-- w js scriptach trzeba do zmienic zeby wysylalo wlasnie w headerze (tak samo jak jest już w content.js)
-- generowanie jakiś id dla uploadowanych plików
-- wspolny wolumen dla server i db container - tam zapisywane pliki
+- apka dodaje pliki clientów do ich personalnych folderow (folder - nazwa usera)
+- apka w /content wyswietla images danego usera (auth check na GET requescie needed)
+- lepszy front
+
+dodatkowe:
+- zrobic cos w milionem logow od kontenera mysql
+
 
