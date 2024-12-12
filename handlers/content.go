@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"simpleAuth/services"
 )
 
@@ -24,7 +25,6 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// TEMPORARY FILE UPLOAD FUNCTIONALITY
 	if req.Method == http.MethodPost {
 		Log.Debug("Handling POST request for file upload")
 
@@ -48,7 +48,7 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 		}
 		defer file.Close()
 
-		dst := "./uploads/" + handler.Filename
+		dst := filepath.Join("/shared-data", handler.Filename)
 		out, err := os.Create(dst)
 		if err != nil {
 			Log.Error("Error saving file:", err)
@@ -68,5 +68,4 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 		wrt.Write([]byte("File uploaded successfully!"))
 		return
 	}
-
 }

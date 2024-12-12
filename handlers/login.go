@@ -23,9 +23,8 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 	Log.Debugf("    - Email: %s", email)
 	Log.Debugf("    - Password: %s", password)
 
-	user, ok := Users[email]
-
-	if !ok || !utils.CheckPasswordHash(password, user.PasswordHash) {
+	user, err := services.LoadUserData(email)
+	if err != nil || !utils.CheckPasswordHash(password, user.PasswordHash) {
 		Log.Warn("Invalid email or password")
 		http.Error(wrt, "Invalid email or password", http.StatusUnauthorized)
 		return
@@ -58,9 +57,13 @@ func login(wrt http.ResponseWriter, req *http.Request) {
 	})
 	user.SessionToken = sessionToken
 	user.CSRFToken = csrfToken
-	Users[email] = user
-
-	services.SaveUserData()
+	err = services.SaveUserData(email, user)
+	if err != nil {
+		Log.Error("Failed to save user data:", err)
+		http.Error(wrt, "Internal server error", http.StatusInternalServerError)
+		return
+	}
 
 	Log.Info("Login successful")
+	http.Redirect(wrt, req, "/content", http.StatusFound)
 }
