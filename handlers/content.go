@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"fmt"
+	"html/template"
 	"io"
 	"log"
 	"net/http"
@@ -45,21 +45,33 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		// Prepare file list HTML
-		fileList := "<ul>"
+		// Prepare the file list for injection into the HTML
+		var fileList []string
 		for _, file := range files {
 			if !file.IsDir() {
-				// Add each file to the list (safe file listing)
-				fileList += fmt.Sprintf("<li><a href='/download/%s'>%s</a></li>", file.Name(), file.Name())
+				// Add each file name to the list
+				fileList = append(fileList, file.Name())
 			}
 		}
-		fileList += "</ul>"
 
-		// Serve content page and append the file list
-		http.ServeFile(wrt, req, "./static/html/content.html")
-		Log.Info("test")
-		Log.Info(fileList)
-		wrt.Write([]byte(fileList)) // Add the file list below the content
+		// Create a template and pass the file list to the template
+		tmpl, err := template.ParseFiles("./static/html/content.html")
+		if err != nil {
+			Log.Error("Error parsing template:", err)
+			http.Error(wrt, "Error rendering page", http.StatusInternalServerError)
+			return
+		}
+
+		// Render the page with the file list
+		err = tmpl.Execute(wrt, struct {
+			Files []string
+		}{Files: fileList})
+
+		if err != nil {
+			Log.Error("Error rendering template:", err)
+			http.Error(wrt, "Error rendering page", http.StatusInternalServerError)
+			return
+		}
 
 		return
 	}

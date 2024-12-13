@@ -9,7 +9,7 @@ function getCsrfToken() {
     console.error("CSRF token not found in cookies.");
     throw new Error("CSRF token missing.");
   }
-  console.log(csrfToken);
+  console.log("CSRF Token: ", csrfToken);
   return csrfToken;
 }
 
@@ -68,3 +68,36 @@ function logout() {
 }
 
 document.getElementById("logoutButton").addEventListener("click", logout);
+
+// Add CSRF Token for File Viewing
+function handleFileClick(event) {
+  event.preventDefault(); // Prevent the default action (i.e., direct navigation)
+
+  const fileUrl = event.target.getAttribute("href");
+  const csrfToken = getCsrfToken();
+
+  // Create a request with the CSRF token to validate the session
+  fetch(fileUrl, {
+    method: "GET",
+    headers: {
+      "X-CSRF-Token": csrfToken, // Include CSRF token for validation
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        // If the response is OK, just let the browser handle the file directly
+        window.open(fileUrl, "_blank");
+      } else {
+        console.error("Failed to load the file");
+        return response.text();
+      }
+    })
+    .catch((error) => {
+      console.error("Error while loading the file:", error);
+    });
+}
+
+// Attach event listeners to all file links
+document.querySelectorAll(".file-link").forEach((link) => {
+  link.addEventListener("click", handleFileClick);
+});
