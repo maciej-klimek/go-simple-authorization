@@ -1,0 +1,11 @@
+Show all containers:
+docker ps -a
+
+Acces db container:
+docker exec -it DATABASE mysql -u admin -ppassword root_password
+
+List of volumes:
+docker volume ls
+
+Check the volume data:
+docker volume inspect go-simple-authorization_shared-data
