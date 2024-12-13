@@ -13,7 +13,6 @@ import (
 func content(wrt http.ResponseWriter, req *http.Request) {
 	Log.Info("Content Handler called")
 
-	// GET request: Serve content page and list user files
 	if req.Method == http.MethodGet {
 		Log.Debug("Serving content page")
 		sessionCookie, err := req.Cookie("session_token")
@@ -25,7 +24,6 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 
 		Log.Info("Valid session token cookie found. Serving content.")
 
-		// Retrieve the logged-in user's email to list their files
 		emailCookie, err := req.Cookie("email")
 		if err != nil {
 			Log.Error("Error retrieving email cookie:", err)
@@ -34,10 +32,8 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 		}
 		email := emailCookie.Value
 
-		// Construct the user's directory path
 		userDir := filepath.Join("/shared-data", email)
 
-		// List all files in the user's folder
 		files, err := os.ReadDir(userDir)
 		if err != nil {
 			Log.Error("Error reading user directory:", err)
@@ -45,16 +41,13 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		// Prepare the file list for injection into the HTML
 		var fileList []string
 		for _, file := range files {
 			if !file.IsDir() {
-				// Add each file name to the list
 				fileList = append(fileList, file.Name())
 			}
 		}
 
-		// Create a template and pass the file list to the template
 		tmpl, err := template.ParseFiles("./static/html/content.html")
 		if err != nil {
 			Log.Error("Error parsing template:", err)
@@ -62,7 +55,6 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		// Render the page with the file list
 		err = tmpl.Execute(wrt, struct {
 			Files []string
 		}{Files: fileList})
@@ -76,7 +68,6 @@ func content(wrt http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// POST request: Handle file upload
 	if req.Method == http.MethodPost {
 		Log.Debug("Handling POST request for file upload")
 

@@ -1,8 +1,0 @@
-- apka dodaje pliki clientów do ich personalnych folderow (folder - nazwa usera)
-- apka w /content wyswietla images danego usera (auth check na GET requescie needed)
-- lepszy front
-
-dodatkowe:
-- zrobic cos w milionem logow od kontenera mysql
-
-
