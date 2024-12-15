@@ -27,24 +27,18 @@ func register(wrt http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	_, err := services.LoadUserData(email)
-	if err == nil {
+	if _, ok := Users[email]; ok {
 		Log.Warn("User already exists:", email)
 		http.Error(wrt, "User already exists", http.StatusConflict)
 		return
 	}
 
 	hashedPassword, _ := utils.HashPassword(password)
-	user := services.LoginData{
+	Users[email] = services.LoginData{
 		PasswordHash: hashedPassword,
 	}
-	err = services.SaveUserData(email, user)
-	if err != nil {
-		Log.Error("Failed to save user data:", err)
-		http.Error(wrt, "Internal server error", http.StatusInternalServerError)
-		return
-	}
+	services.SaveUserData()
 
 	Log.Info("User registered successfully")
-	http.Redirect(wrt, req, "/login", http.StatusFound)
+	wrt.Write([]byte("User registered successfully"))
 }
