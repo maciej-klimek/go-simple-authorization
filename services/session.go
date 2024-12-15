@@ -21,9 +21,9 @@ func Authorize(req *http.Request) error {
 	}
 
 	email := emailCookie.Value
-	user, err := LoadUserData(email)
-	if err != nil {
-		Log.Error("User not found or failed to load user data:", err)
+	user, ok := Users[email]
+	if !ok {
+		Log.Error("User not found")
 		return ErrAuth
 	}
 
@@ -44,14 +44,16 @@ func Authorize(req *http.Request) error {
 		return ErrAuth
 	}
 
+	//debugg := req.Header
+	//Log.Debug(debugg)
 	csrfToken := req.Header.Get("X-CSRF-Token")
 	Log.WithFields(logrus.Fields{
 		"request_token": csrfToken,
 		"local_token":   user.CSRFToken,
 	}).Debug("CSRF token check")
 
-	if csrfToken == "" || csrfToken != user.CSRFToken {
-		Log.Warn("CSRF token mismatch or empty")
+	if csrfToken != user.CSRFToken {
+		Log.Warn("CSRF token mismatch")
 		return ErrAuth
 	}
 
