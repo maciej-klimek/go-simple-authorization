@@ -3,6 +3,7 @@ package services
 import (
 	"database/sql"
 	"log"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -17,12 +18,17 @@ var db *sql.DB
 
 func InitDB() error {
 	var err error
-	db, err = sql.Open("mysql", "user:password@tcp(db:3306)/simpleAuthDB")
-	if err != nil {
-		return err
+	for i := 0; i < 10; i++ {
+		db, err = sql.Open("mysql", "admin:password@tcp(db:3306)/auth_server_db")
+		if err == nil {
+			err = db.Ping()
+			if err == nil {
+				break
+			}
+		}
+		log.Printf("Failed to connect to database. Retrying in 5 seconds... (%d/10)\n", i+1)
+		time.Sleep(5 * time.Second)
 	}
-
-	err = db.Ping()
 	if err != nil {
 		return err
 	}
