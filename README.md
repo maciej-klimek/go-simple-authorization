@@ -7,7 +7,7 @@
 - [Zadanie 1: Skonteneryzowanie prostego serwisu](#🧩-zadanie-1:-skonteneryzowanie-prostego-serwisu)
 - [Zadanie 2: Postawienie kontenera z bazą danych](#🧩-zadanie-2:-postawienie-kontenera-z-bazą-danych)
 - [Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją](#🧩-zadanie-3:-zapis-plików-do-wolumenu-i-pełna-integracja-bazy-z-aplikacją)
-- [Przydane komendy](#🛠️-przydane-komendy)
+- [Przydane komendy](#przydane-komendy)
 
 ---
 
@@ -195,7 +195,7 @@ Aplikacja jest przygotowana tak, aby pliki uploadowane przez użytkowników był
 
 ---
 
-## 🛠️ Przydane komendy:
+## Przydane komendy:
 
 - **Pokaż wszystkie kontenery (działające i zatrzymane):**
 
