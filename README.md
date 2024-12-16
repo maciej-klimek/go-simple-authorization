@@ -2,11 +2,11 @@
 
 ## 📑 Nawigacja
 
-- [Wstęp](#📌-wstęp)
-- [Instalacja środowiska Docker](#⚙️-instalacja-środowiska-docker)
-- [Zadanie 1: Skonteneryzowanie prostego serwisu](#🧩-zadanie-1:-skonteneryzowanie-prostego-serwisu)
-- [Zadanie 2: Postawienie kontenera z bazą danych](#🧩-zadanie-2:-postawienie-kontenera-z-bazą-danych)
-- [Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją](#🧩-zadanie-3:-zapis-plików-do-wolumenu-i-pełna-integracja-bazy-z-aplikacją)
+- [Wstęp](#wstęp)
+- [Instalacja środowiska Docker](#⚙instalacja-środowiska-docker)
+- [Zadanie 1: Skonteneryzowanie prostego serwisu](#zadanie-1-skonteneryzowanie-prostego-serwisu)
+- [Zadanie 2: Postawienie kontenera z bazą danych](#zadanie-2-postawienie-kontenera-z-bazą-danych)
+- [Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją](#zadanie-3-zapis-plików-do-wolumenu-i-pełna-integracja-bazy-z-aplikacją)
 - [Przydane komendy](#przydane-komendy)
 
 ---
@@ -46,7 +46,7 @@ docker --version
 <br>
 <br>
 
-# 🧩 Zadanie 1: Skonteneryzowanie prostego serwisu
+# Zadanie 1: Skonteneryzowanie prostego serwisu
 
 ### a) Kontekst:
 
@@ -130,7 +130,7 @@ Najlepiej pokaż screeny z:
 <br>
 <br>
 
-# 🧩 Zadanie 2: Postawienie kontenera z bazą danych
+# Zadanie 2: Postawienie kontenera z bazą danych
 
 ### a) Kontekst:
 
@@ -157,7 +157,7 @@ Musisz rozszerzyć serwis o połączenie z niezależną bazą danych. Zamiast w 
 <br>
 <br>
 
-# 🧩 Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją
+# Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją
 
 ### a) Kontekst:
 
