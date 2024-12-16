@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"simpleAuth/handlers"
 	"simpleAuth/services"
@@ -8,9 +9,11 @@ import (
 )
 
 func main() {
-
+	err := services.InitDB()
+	if err != nil {
+		log.Fatal("Failed to initialize database:", err)
+	}
 	utils.Logger.Info("================= SERVER IS UP =================")
-	services.LoadUserData()
 	handlers.Routes()
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))

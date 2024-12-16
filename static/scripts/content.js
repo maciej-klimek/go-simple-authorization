@@ -9,7 +9,7 @@ function getCsrfToken() {
     console.error("CSRF token not found in cookies.");
     throw new Error("CSRF token missing.");
   }
-  console.log(csrfToken);
+  console.log("CSRF Token: ", csrfToken);
   return csrfToken;
 }
 
@@ -68,3 +68,32 @@ function logout() {
 }
 
 document.getElementById("logoutButton").addEventListener("click", logout);
+
+function handleFileClick(event) {
+  event.preventDefault();
+
+  const fileUrl = event.target.getAttribute("href");
+  const csrfToken = getCsrfToken();
+
+  fetch(fileUrl, {
+    method: "GET",
+    headers: {
+      "X-CSRF-Token": csrfToken,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        window.open(fileUrl, "_blank");
+      } else {
+        console.error("Failed to load the file");
+        return response.text();
+      }
+    })
+    .catch((error) => {
+      console.error("Error while loading the file:", error);
+    });
+}
+
+document.querySelectorAll(".file-link").forEach((link) => {
+  link.addEventListener("click", handleFileClick);
+});

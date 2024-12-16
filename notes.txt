@@ -1,0 +1,48 @@
+UPDATE LOG: -------------------------------------------------------------
+    - name changes, inne nazwy kontenerow, haslo do bazy, qol changes
+    - pliki zapisują się per user w shared-data (nazwa folderu = email narazie)
+    - lista plików usera wyświetla się na /content (MOGA BYC Z TYM BUGI, do potestowania):
+        - templatka html w handlers/content.go
+        - nowy endpoint i handler viewFile.go -> po kliknieciu pliku na liście pokazuje go w przegladarce (jak sie da), albo puszcza na download
+    - naprawiony auth w kilku miejscach (apka używa funkcji services/Authorize zamiast z palca sprawdzac credentiale z cookies), 
+        ale jeszcze trzeba będzie przejrzec bo w kilku na pewno dalej jest syf
+
+
+TODO: -------------------------------------------------------------
+    - lepszy front
+    - zadania:
+        1. Student dostaje base apke (bez zadnej bazy danych, wszystko zapisuje sie do .json a pliki po prostu do folderu, patrz kilka commitow w tył)
+            Musi napisać prostego docker fila żeby apka staneła w kontenerze i zachowała pełną funkcionalnosc
+            Wynik: screen logow stworzenia usera, zalogowania, zuploadowania plikow
+
+        2. Student dostaje apke przygotowaną pod connection z kontenerem bazy danych
+            Musi postawic kontener bazy za pomocą jakiegoś gotowego obrazu z Docker Repository
+            Wynik: Screen logów że baza stoi i wykonanie jakiegoś prostego zapytania typu 'CREATE TABLE users' w kontenerze
+
+        3. Student musi połączyć ze sobą te dwa kontenery tak żeby serwis zyskał pełną funkcionalnosc - MOŻNA TO EW. ROZBIC NA DWA ZADANIA
+            Trzeba stworzyc docker-compose.yaml w którym poprawnie zdefiniowane jest jak ma się wszystko odpalac, zdefiniowac wolumen
+            Wynik: Screen pokazujący że dane userów są zapisywane w bazie danych (np. SELECT * FROM users) a ich pliki w odpowiednich dirach w shared-volume   
+
+    -* zrobic cos w milionem logow od kontenera mysql
+
+
+NOTES: -------------------------------------------------------------
+
+    Show all containers:
+    docker ps -a
+
+    Acces db container:
+    docker exec -it DATABASE mysql -u admin -ppassword root_password
+
+    List of volumes:
+    docker volume ls
+
+    Check the volume data:
+    docker volume inspect go-simple-authorization_shared-data
+
+
+
+
+
+
+
