@@ -1,5 +1,3 @@
-Sure! Here's the improved version with added styling and navigation for better readability:
-
 # 📚 README
 
 ## 📑 Nawigacja
