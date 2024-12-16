@@ -4,9 +4,9 @@
 
 - [Wstęp](#📌-wstęp)
 - [Instalacja środowiska Docker](#⚙️-instalacja-środowiska-docker)
-- [Zadanie 1: Skonteneryzowanie prostego serwisu](#🧩-zadanie-1-skonteneryzowanie-prostego-serwisu)
-- [Zadanie 2: Postawienie kontenera z bazą danych](#🧩-zadanie-2-postawienie-kontenera-z-bazą-danych)
-- [Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją](#🧩-zadanie-3-zapis-plików-do-wolumenu-i-pełna-integracja-bazy-z-aplikacją)
+- [Zadanie 1: Skonteneryzowanie prostego serwisu](#🧩-zadanie-1:-skonteneryzowanie-prostego-serwisu)
+- [Zadanie 2: Postawienie kontenera z bazą danych](#🧩-zadanie-2:-postawienie-kontenera-z-bazą-danych)
+- [Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją](#🧩-zadanie-3:-zapis-plików-do-wolumenu-i-pełna-integracja-bazy-z-aplikacją)
 - [Przydane komendy](#🛠️-przydane-komendy)
 
 ---
@@ -130,7 +130,7 @@ Najlepiej pokaż screeny z:
 <br>
 <br>
 
-## 🧩 Zadanie 2: Postawienie kontenera z bazą danych
+# 🧩 Zadanie 2: Postawienie kontenera z bazą danych
 
 ### a) Kontekst:
 
