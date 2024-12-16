@@ -130,7 +130,7 @@ Najlepiej pokaż screeny z:
 <br>
 <br>
 
-# 🧩 Zadanie 2: Postawienie kontenera z bazą danych
+## 🧩 Zadanie 2: Postawienie kontenera z bazą danych
 
 ### a) Kontekst:
 
