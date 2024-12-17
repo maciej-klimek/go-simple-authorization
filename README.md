@@ -3,7 +3,7 @@
 ## 📑 Nawigacja
 
 - [Zadanie 1: Skonteneryzowanie prostego serwisu](#zadanie-1-skonteneryzowanie-prostego-serwisu)
-- [Zadanie 2: Postawienie kontenera z bazą danych](#zadanie-2-postawienie-kontenera-z-bazą-danych)
+- [Zadanie 2: Konfiguracja i uruchomienie kontenera z bazą danych](#zadanie-2-konfiguracja-i-uruchomienie-kontenera-z-bazą-danych)
 - [Zadanie 3: Zapis plików do wolumenu i pełna integracja bazy z aplikacją](#zadanie-3-zapis-plików-do-wolumenu-i-pełna-integracja-bazy-z-aplikacją)
 - [Przydane komendy](#przydane-komendy)
 
@@ -66,8 +66,6 @@ Otrzymujesz prosty HTTP web server, który:
 
 ## 📝 Podstawowe komendy w Dockerfile
 
-Dockerfile to plik konfiguracyjny, który zawiera instrukcje niezbędne do zbudowania obrazu Docker. Oto podstawowe komendy, które można użyć w Dockerfile:
-
       Określanie obrazu bazowego, z którego będzie budowany nasz obraz.
       FROM <image_name>:<tag>
 
@@ -107,7 +105,7 @@ Dockerfile to plik konfiguracyjny, który zawiera instrukcje niezbędne do zbudo
 
 Najlepiej pokaż screeny z:
 
-1. Komendą uruchamiającą kontener:
+1. Komendą uruchamiającą kontener np:
    ```bash
    docker run --name zadanie_1_kontener -p 8080:8080 zadanie_1_image
    ```
@@ -129,15 +127,15 @@ Najlepiej pokaż screeny z:
 <br>
 <br>
 
-# Zadanie 2: Postawienie kontenera z bazą danych
+# Zadanie 2: Konfiguracja i uruchomienie kontenera z bazą danych
 
 ### a) Kontekst:
 
-Musisz rozszerzyć serwis o połączenie z niezależną bazą danych. Zamiast w pliku `userData.json`, dane użytkowników będą przechowywane w tej bazie danych. Aplikacja jest już skonfigurowana do komunikacji z bazą danych na porcie **3306**. (patrz: `services/db.go`)
+Musisz rozszerzyć serwis o połączenie z niezależną bazą danych. Zamiast w pliku `userData.json`, dane użytkowników będą przechowywane w tej bazie. Aplikacja jest już skonfigurowana do komunikacji z bazą danych na porcie **3306**. (patrz: `services/db.go`)
 
 ### b) Twoje zadanie:
 
-1. **Uruchom kontener bazy danych**: Przygotuj plik `docker-compose.yaml`, korzystając z gotowego obrazu dostępnego w Docker Hub (np. `mysql`, `postgres` lub innego). Skonfiguruj porty i ustawienia umożliwiające połączenie z aplikacją.
+1. **Uruchom kontener bazy danych**: Przygotuj plik `docker-compose.yaml`, korzystając z gotowego obrazu dostępnego w [Docker Hub](https://hub.docker.com/) (np. `mysql`, `postgres` lub innego). Skonfiguruj porty i ustawienia umożliwiające połączenie z aplikacją.
 2. **Skonfiguruj bazę danych**: Zdefiniuj zmienne środowiskowe dla użytkownika, hasła i nazwy bazy, aby aplikacja mogła się z nią połączyć.
    > UWAGA: Aplikacja jest przygotowana pod nazwę `auth_server_db` (patrz plik `services/db.go`).
 3. **Health check dla kontenera bazy danych**: Dodaj mechanizm **health check** w `docker-compose.yaml`, aby upewnić się, że baza danych działa i jest gotowa do użycia. Zaimplementuj mechanizm ponawiania uruchamiania aplikacji, dopóki baza danych nie będzie gotowa.
