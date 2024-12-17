@@ -180,6 +180,14 @@ Musisz rozszerzyć serwis o połączenie z niezależną bazą danych. Zamiast w 
     volumes:
       db-data: # Definicja woluminu
 
+Jak wejść do mysql:
+```
+  mysql -u admin -p
+  SHOW DATABASES;
+  USE <db_name>
+```
+
+
 ## c) Wynik:
 
 - Zrzut ekranu z **aktywnymi kontenerami**, pokazujący działanie aplikacji i bazy danych (Docker Desktop albo komenda: `docker ps`).
