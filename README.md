@@ -137,17 +137,53 @@ Musisz rozszerzyć serwis o połączenie z niezależną bazą danych. Zamiast w 
 
 1. **Uruchom kontener bazy danych**: Przygotuj plik `docker-compose.yaml`, korzystając z gotowego obrazu dostępnego w [Docker Hub](https://hub.docker.com/) (np. `mysql`, `postgres` lub innego). Skonfiguruj porty i ustawienia umożliwiające połączenie z aplikacją.
 2. **Skonfiguruj bazę danych**: Zdefiniuj zmienne środowiskowe dla użytkownika, hasła i nazwy bazy, aby aplikacja mogła się z nią połączyć.
+
    > UWAGA: Aplikacja jest przygotowana pod nazwę `auth_server_db` (patrz plik `services/db.go`).
+
 3. **Health check dla kontenera bazy danych**: Dodaj mechanizm **health check** w `docker-compose.yaml`, aby upewnić się, że baza danych działa i jest gotowa do użycia. Zaimplementuj mechanizm ponawiania uruchamiania aplikacji, dopóki baza danych nie będzie gotowa.
 4. **Wykonanie zapytania SQL**: Po uruchomieniu bazy danych, dodaj użytkownika przez aplikację i wykonaj zapytanie SQL, np.:
    ```sql
    SELECT * FROM users;
    ```
 
+### Przykładowy plik docker-compose.yml
+
+    version: '3.8' # Wersja składni Docker Compose
+    
+    services: 
+      app: # Nazwa usługi
+        image: node:16 # Obraz Docker
+        container_name: app-container # Nazwa kontenera
+        build: 
+          context: ./app # Ścieżka do katalogu projektu
+          dockerfile: Dockerfile # Nazwa pliku Dockerfile
+        ports:
+          - "3000:3000" # Mapowanie portów host:kontener
+        volumes:
+          - ./app:/usr/src/app # Mapowanie woluminów lokalnych na kontener
+        environment: 
+          NODE_ENV: development # Przykładowa zmienna środowiskowa
+    
+      database:
+        image: mysql:8.0 # Obraz bazy danych MySQL
+        container_name: mysql-container # Nazwa kontenera
+        ports:
+          - "3306:3306" # Mapowanie portów host:kontener
+        environment: 
+          MYSQL_ROOT_PASSWORD: rootpassword # Hasło użytkownika root
+          MYSQL_DATABASE: mydatabase # Nazwa bazy danych
+          MYSQL_USER: user # Nazwa użytkownika
+          MYSQL_PASSWORD: password # Hasło użytkownika
+        volumes:
+          - db-data:/var/lib/mysql # Wolumin do przechowywania danych
+    
+    volumes:
+      db-data: # Definicja woluminu
+
 ## c) Wynik:
 
-- Zrzut ekranu z **aktywnymi kontenerami**, pokazujący działanie aplikacji i bazy danych (komenda: `docker ps`).
-- Zrzut ekranu, który pokazuje, że użytkownik został dodany do bazy danych.
+- Zrzut ekranu z **aktywnymi kontenerami**, pokazujący działanie aplikacji i bazy danych (Docker Desktop albo komenda: `docker ps`).
+- Zrzut ekranu, który pokazuje, że użytkownik został dodany do bazy danych (patrz zapytanie SQL powyżej).
 
 ---
 
