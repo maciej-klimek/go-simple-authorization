@@ -53,6 +53,7 @@ Otrzymujesz prosty HTTP web server, który:
 - Do komunikacji używa portu **8080**.
 - Implementuje prosty system uwierzytelnienia, a wszystkie dane są zapisywane w pliku `userData.json`.
 - Umożliwia użytkownikom upload ich personalnych plików. W mocno okrojonej wersji wszystkie pliki trafiają do folderu `/uploads`.
+- Serwis do prawidłowej pracy potrzebuje skompilowanych plików `go`, katagolu `/uploads`, katalogu `/static` oraz pliku `userData.json`
 
 ### b) Twoje zadanie:
 
